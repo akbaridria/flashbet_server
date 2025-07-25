@@ -4,13 +4,15 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node src/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bullmq": "^5.56.6",
+    "dotenv": "^17.2.1",
     "fastify": "^5.4.0"
   },
   "devDependencies": {
