@@ -4,7 +4,7 @@ import config from "./config";
 
 const server = fastify();
 
-const betQueue = new Queue("betQueue", {
+const betQueue = new Queue(config.QUEUE_NAME, {
   connection: {
     url: config.redisUrl,
   },
@@ -15,12 +15,31 @@ server.get("/", async () => {
 });
 
 server.post("/add-job", async (request, reply) => {
-  const { betId } = request.body as { betId: string };
+  const { betId, expiryTime } = request.body as {
+    betId: string;
+    expiryTime: number;
+  };
   if (!betId) {
     reply.status(400).send({ error: "Bet ID is required" });
     return;
   }
-  betQueue.add(`betid-${betId}`, { betId });
+  const now = Math.floor(Date.now() / 1000);
+  const delayMs = Math.max((expiryTime - now) * 1000, 0);
+
+  await betQueue.add(
+    `betid-${betId}`,
+    { betId, expiryTime },
+    {
+      delay: delayMs,
+      attempts: 3,
+      backoff: {
+        type: "exponential",
+        delay: 1000,
+      },
+      removeOnComplete: true,
+      removeOnFail: false,
+    }
+  );
   reply.status(201).send({ message: "Job added successfully", betId });
 });
 
