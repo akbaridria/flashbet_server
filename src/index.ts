@@ -31,7 +31,7 @@ server.post("/add-job", async (request, reply) => {
     { betId, expiryTime },
     {
       delay: delayMs,
-      attempts: 3,
+      attempts: 10,
       backoff: {
         type: "exponential",
         delay: 1000,
