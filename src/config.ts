@@ -13,7 +13,7 @@ const config = {
   PYTH_CONTRACT_ADDRESS: "0x2880aB155794e7179c9eE2e38200202908C17B43",
   RPC_URL: "https://node.ghostnet.etherlink.com",
   PRIVATE_KEY: process.env.PRIVATE_KEY || "",
-  FLASHBET_CONTRACT_ADDRESS: "0xTest1234123412341234",
+  FLASHBET_CONTRACT_ADDRESS: process.env.FLASHBET_CONTRACT_ADDRESS,
 };
 
 export default config;

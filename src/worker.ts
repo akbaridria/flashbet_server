@@ -62,7 +62,6 @@ const getLatestPriceUpdates = async () => {
 const worker = new Worker<BetJobData>(
   config.QUEUE_NAME,
   async (job) => {
-    console.log(job.data.betId);
     const data = await getLatestPriceUpdates();
     const client = getClient();
     await client.writeContract({
