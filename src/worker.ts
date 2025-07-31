@@ -54,7 +54,7 @@ const getLatestPriceUpdates = async () => {
     args: [priceUpdateData],
   })) as { fee: bigint };
   return {
-    fee: dataFee?.fee || BigInt(0),
+    fee: BigInt(100) || dataFee.fee,
     priceUpdateData,
   };
 };
@@ -62,6 +62,7 @@ const getLatestPriceUpdates = async () => {
 const worker = new Worker<BetJobData>(
   config.QUEUE_NAME,
   async (job) => {
+    console.log(`Processing job with ID ${job.id} and data:`, job.data);
     const data = await getLatestPriceUpdates();
     const client = getClient();
     await client.writeContract({

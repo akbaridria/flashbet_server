@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fastify/cors": "^11.0.1",
     "@pythnetwork/hermes-client": "^2.0.0",
     "axios": "^1.11.0",
     "bullmq": "^5.56.6",

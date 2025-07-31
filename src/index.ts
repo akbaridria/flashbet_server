@@ -4,6 +4,8 @@ import config from "./config";
 
 const server = fastify();
 
+server.register(require("@fastify/cors"), { origin: true });
+
 const betQueue = new Queue(config.QUEUE_NAME, {
   connection: {
     url: config.redisUrl,
